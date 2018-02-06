@@ -10,6 +10,14 @@ public class Contact {
     private Long AddressId;
     private String name;
 
+    public Contact() {
+    }
+
+    public Contact(Long AddressId, String name) {
+        this.AddressId = AddressId;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

@@ -18,6 +18,7 @@ import model.Address;
 public class AddressRepository {
 
     private final DataSource ds;
+
     
     public AddressRepository() {
         try{
@@ -70,17 +71,60 @@ public class AddressRepository {
         } 
     }
     
-    public void create(Address address){
-        
+    public void create(Address address) throws SQLException{
+        Connection conn = ds.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            try {
+                stmt.executeUpdate("INSERT INTO address (street, city. state.zip) VALUES ('" +
+                        address.getStreet() +"','" + address.getCity() + "','" +
+                        address.getState() + "','" + address.getZip() + "')",
+                        Statement.RETURN_GENERATED_KEYS);
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                try{
+                    if(generatedKeys.next()){
+                        address.setId(generatedKeys.getLong("id"));
+                    }
+                } finally {
+                    generatedKeys.close();
+                }
+            } finally {
+                stmt.close();
+            }            
+        } finally {
+            conn.close(); 
+        } 
     }
     
-     public void update(Address address){
-        
+     public void update(Address address) throws SQLException{
+        Connection conn = ds.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            try {
+                stmt.executeUpdate("UPDATE address SET street = '" + address.getStreet() +
+                        "', city = '" + address.getCity() + "', state = '" + address.getState() +
+                        "', zip = '" + address.getZip() + "' where id = " + address.getId() );
+            } finally {
+                stmt.close();
+            }            
+        } finally {
+            conn.close(); 
+        } 
     }
     
      
-    public void delete(Address address){
-        
+    public void delete(Address address) throws SQLException{
+        Connection conn = ds.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+            try {
+                stmt.executeUpdate("DELETE FROM address where id = " + address.getId() );
+            } finally {
+                stmt.close();
+            }            
+        } finally {
+            conn.close(); 
+        } 
     }
 
     private Address unmarshall(ResultSet results) throws SQLException{
