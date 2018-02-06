@@ -9,3 +9,6 @@ Address
     String  city
     String state
     String zip
+
+
+mvn jetty:run -Dhttp.port=8088
