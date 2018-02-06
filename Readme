@@ -1,0 +1,11 @@
+Contact
+    long id
+    String name
+    long address
+
+Address
+    long id
+    String street
+    String  city
+    String state
+    String zip

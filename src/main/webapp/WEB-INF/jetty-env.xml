@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" />
+<Configuration class="org.eclippse.jetty.webapp.WebAppContext">
+    <New class="org.eclipse.jetty.plus.Resource">
+        <Arg/>
+        <Arg>jdbc/trainingdb</Arg>
+        <Arg>
+            <New class="com.jailbox.bonecp.BoneCPData.Source">
+                <Set name="DatasourceBean">
+                    <New class="org.hsqldb.jdbc.JDBCDataSource">
+                        <Set name="url">jdbc:hsql:file:target/data/trainingdb</Set>
+                        <Set name="user">dbuser</Set>
+                        <Set name="password">dbpassword</Set>
+                    </New>
+                </Set>
+            </New>
+        </Arg>    
+    </New>
+</Configuration>>
