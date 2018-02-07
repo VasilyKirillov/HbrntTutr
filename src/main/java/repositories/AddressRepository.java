@@ -77,7 +77,7 @@ public class AddressRepository {
         try {
             Statement stmt = conn.createStatement();
             try {
-                stmt.executeUpdate("INSERT INTO address (street, city. state.zip) VALUES ('" +
+                stmt.executeUpdate("INSERT INTO address (street, city, state, zip) VALUES ('" +
                         address.getStreet() +"','" + address.getCity() + "','" +
                         address.getState() + "','" + address.getZip() + "')",
                         Statement.RETURN_GENERATED_KEYS);
