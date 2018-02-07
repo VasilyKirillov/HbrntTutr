@@ -3,14 +3,13 @@ package contacts.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-//import javax.persistence.Table;
+
 
 @Entity
-//@Table
 public class Contact {
 
     @Id
@@ -20,7 +19,7 @@ public class Contact {
     @Column
     private String name;    
     
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})    
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY)
     private Address address;
 
     public Contact() {
