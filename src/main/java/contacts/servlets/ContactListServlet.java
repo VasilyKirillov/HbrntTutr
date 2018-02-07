@@ -21,13 +21,10 @@ public class ContactListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            request.setAttribute("contacts", contactRepository.findAll());
-            RequestDispatcher view = request.getRequestDispatcher("jsp/contactList.jsp");
-            view.forward(request, response);
-        } catch (SQLException e) {
-            throw new ServletException(e);
-        }
+
+        request.setAttribute("contacts", contactRepository.findAll());
+        RequestDispatcher view = request.getRequestDispatcher("jsp/contactList.jsp");
+        view.forward(request, response);
     }
 
 }

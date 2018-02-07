@@ -1,9 +1,34 @@
 package contacts.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+//import javax.persistence.Table;
+
+@Entity
+//@Table
 public class Contact {
 
+    @Id
+    @GeneratedValue
     private Long id;
+    
+    @Column
     private String name;
+    
+    @Column
+    private String proneNumber;
+
+    public String getProneNumber() {
+        return proneNumber;
+    }
+
+    public void setProneNumber(String proneNumber) {
+        this.proneNumber = proneNumber;
+    }
+    
+    @Column
     private Long addressId;
 
     public Contact() {
