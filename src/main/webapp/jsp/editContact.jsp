@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="address" value="${contact.address}"/>
 <html>
     <head>
         <title>add contact</title>

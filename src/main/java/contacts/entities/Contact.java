@@ -1,5 +1,6 @@
 package contacts.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Contact {
     @Column
     private String name;    
     
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})    
     private Address address;
 
     public Contact() {
