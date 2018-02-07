@@ -15,19 +15,19 @@ import contacts.repositories.ContactRepository;
 @WebServlet("/contacts")
 public class ContactListServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-	private final ContactRepository contactRepository = new ContactRepository();
+    private static final long serialVersionUID = 1L;
+    private final ContactRepository contactRepository = new ContactRepository();
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		try {
-			request.setAttribute("contacts", contactRepository.findAll());
-			RequestDispatcher view = request.getRequestDispatcher("jsp/contactList.jsp");
-			view.forward(request, response);
-		} catch (SQLException e) {
-			throw new ServletException(e);
-		}
-	}
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            request.setAttribute("contacts", contactRepository.findAll());
+            RequestDispatcher view = request.getRequestDispatcher("jsp/contactList.jsp");
+            view.forward(request, response);
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
+    }
 
 }

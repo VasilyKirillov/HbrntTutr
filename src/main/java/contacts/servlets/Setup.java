@@ -12,17 +12,18 @@ import contacts.repositories.ContactRepository;
 @WebListener
 public class Setup implements ServletContextListener {
 
-	@Override
-	public void contextDestroyed(ServletContextEvent sce) {}
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+    }
 
-	@Override
-	public void contextInitialized(ServletContextEvent sce) {
-		try {
-			new AddressRepository().init();
-			new ContactRepository().init();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        try {
+            new AddressRepository().init();
+            new ContactRepository().init();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

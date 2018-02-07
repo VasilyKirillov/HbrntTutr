@@ -17,35 +17,43 @@ import contacts.repositories.ContactRepository;
 @WebServlet("/contact")
 public class ContactServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-	private final AddressRepository addressRepository = new AddressRepository();
-	private final ContactRepository contactRepository = new ContactRepository();
+    private static final long serialVersionUID = 1L;
+    private final AddressRepository addressRepository = new AddressRepository();
+    private final ContactRepository contactRepository = new ContactRepository();
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		if (request.getParameter("add") != null) {
-			request.getRequestDispatcher("jsp/addContact.jsp").forward(request, response);
-		} else {
-			// TODO
-			super.doGet(request, response);
-		}
-	}
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        if (request.getParameter("add") != null) {
+            request.getRequestDispatcher("jsp/addContact.jsp").forward(request, response);
+        } else {
+            long id = Long.parseLong(request.getParameter("id"));
+            try {
+                Contact contact = contactRepository.find(id);
+                Address address = addressRepository.find(contact.getAddressId());
+                request.setAttribute("contact", contact);
+                request.setAttribute("address", address);
+                request.getRequestDispatcher("/jsp/viewContact.jsp").forward(request, response);
+            } catch (SQLException ex) {
+                throw new ServletException(ex);
+            }
+        }
+    }
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		try {
-			if (request.getParameter("add") != null) {
-				Address address = new Address(request.getParameter("street"), request.getParameter("city"), request.getParameter("state"), request.getParameter("zip"));
-				addressRepository.create(address);
-				Contact contact = new Contact(request.getParameter("name"), address.getId());
-				contactRepository.create(contact);
-				response.sendRedirect("contacts");
-			}
-		} catch (SQLException e) {
-			throw new ServletException(e);
-		}
-	}
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            if (request.getParameter("add") != null) {
+                Address address = new Address(request.getParameter("street"), request.getParameter("city"), request.getParameter("state"), request.getParameter("zip"));
+                addressRepository.create(address);
+                Contact contact = new Contact(request.getParameter("name"), address.getId());
+                contactRepository.create(contact);
+                response.sendRedirect("contacts");
+            }
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
+    }
 
 }
