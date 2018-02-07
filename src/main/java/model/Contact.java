@@ -1,4 +1,3 @@
-
 package model;
 
 /**
@@ -6,14 +5,15 @@ package model;
  * @author Vasilii_Kirillov
  */
 public class Contact {
+
     private Long id;
-    private Long AddressId;
     private String name;
+    private Long AddressId;
 
     public Contact() {
     }
 
-    public Contact(Long AddressId, String name) {
+    public Contact(String name, Long AddressId) {
         this.AddressId = AddressId;
         this.name = name;
     }
@@ -26,6 +26,14 @@ public class Contact {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Long getAddressId() {
         return AddressId;
     }
@@ -34,13 +42,4 @@ public class Contact {
         this.AddressId = AddressId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    
 }
