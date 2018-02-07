@@ -11,4 +11,4 @@ Address
     String zip
 
 
-mvn jetty:run -Dhttp.port=8088
+-Djetty.http.port=8088 jetty:run
