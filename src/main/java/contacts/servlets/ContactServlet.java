@@ -33,7 +33,7 @@ public class ContactServlet extends HttpServlet {
                 Address address = addressRepository.find(contact.getAddressId());
                 request.setAttribute("contact", contact);
                 request.setAttribute("address", address);
-                if ((request.getParameter("edit") != null)) {
+                if (request.getParameter("edit") != null) {
                     request.getRequestDispatcher("jsp/editContact.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("jsp/viewContact.jsp").forward(request, response);
@@ -55,21 +55,27 @@ public class ContactServlet extends HttpServlet {
                 Contact contact = new Contact(request.getParameter("name"), address.getId());
                 contactRepository.create(contact);
                 response.sendRedirect("contact?id=" + contact.getId());
-            } else if (request.getParameter("edit") != null) {
+            } else {
                 long id = Long.parseLong(request.getParameter("id"));
                 Contact contact = contactRepository.find(id);
                 Address address = addressRepository.find(contact.getAddressId());
-                contact.setName(request.getParameter("name"));
-                address.setStreet(request.getParameter("street"));
-                address.setCity(request.getParameter("city"));
-                address.setState(request.getParameter("state"));
-                address.setZip(request.getParameter("zip"));
-                contactRepository.update(contact);
-                addressRepository.update(address);
-                
-                response.sendRedirect("contact?id=" + contact.getId());
-            } else {
-                super.doPost(request, response);
+                if (request.getParameter("edit") != null) {
+                    contact.setName(request.getParameter("name"));
+                    address.setStreet(request.getParameter("street"));
+                    address.setCity(request.getParameter("city"));
+                    address.setState(request.getParameter("state"));
+                    address.setZip(request.getParameter("zip"));
+                    contactRepository.update(contact);
+                    addressRepository.update(address);
+
+                    response.sendRedirect("contact?id=" + contact.getId());
+                } else if (request.getParameter("del") != null) {
+                    contactRepository.delete(contact);
+                    addressRepository.delete(address);
+                    response.sendRedirect("contacts");
+                } else {
+                    super.doPost(request, response);
+                }
             }
         } catch (SQLException e) {
             throw new ServletException(e);
