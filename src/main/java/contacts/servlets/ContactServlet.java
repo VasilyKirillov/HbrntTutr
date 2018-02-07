@@ -29,7 +29,7 @@ public class ContactServlet extends HttpServlet {
         } else {
             long id = Long.parseLong(request.getParameter("id"));
             Contact contact = contactRepository.find(id);
-            Address address = addressRepository.find(contact.getAddressId());
+            Address address = contact.getAddress();
             request.setAttribute("contact", contact);
             request.setAttribute("address", address);
             if (request.getParameter("edit") != null) {
@@ -47,22 +47,22 @@ public class ContactServlet extends HttpServlet {
 
         if (request.getParameter("add") != null) {
             Address address = new Address(request.getParameter("street"), request.getParameter("city"), request.getParameter("state"), request.getParameter("zip"));
-            addressRepository.save(address);
-            Contact contact = new Contact(request.getParameter("name"), address.getId());
-            contactRepository.save(contact);
+            address = addressRepository.save(address);
+            Contact contact = new Contact(request.getParameter("name"), address);
+            contact = contactRepository.save(contact);
             response.sendRedirect("contact?id=" + contact.getId());
         } else {
             long id = Long.parseLong(request.getParameter("id"));
             Contact contact = contactRepository.find(id);
-            Address address = addressRepository.find(contact.getAddressId());
+            Address address = contact.getAddress();
             if (request.getParameter("edit") != null) {
                 contact.setName(request.getParameter("name"));
                 address.setStreet(request.getParameter("street"));
                 address.setCity(request.getParameter("city"));
                 address.setState(request.getParameter("state"));
                 address.setZip(request.getParameter("zip"));
-                contactRepository.save(contact);
                 addressRepository.save(address);
+                contactRepository.save(contact);                
 
                 response.sendRedirect("contact?id=" + contact.getId());
             } else if (request.getParameter("del") != null) {

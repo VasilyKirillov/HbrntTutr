@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 //import javax.persistence.Table;
 
 @Entity
@@ -15,28 +17,17 @@ public class Contact {
     private Long id;
     
     @Column
-    private String name;
+    private String name;    
     
-    @Column
-    private String proneNumber;
-
-    public String getProneNumber() {
-        return proneNumber;
-    }
-
-    public void setProneNumber(String proneNumber) {
-        this.proneNumber = proneNumber;
-    }
-    
-    @Column
-    private Long addressId;
+    @OneToOne
+    private Address address;
 
     public Contact() {
     }
 
-    public Contact(String name, Long addressId) {
+    public Contact(String name, Address address) {
         this.name = name;
-        this.addressId = addressId;
+        this.address = address;
     }
 
     public Long getId() {
@@ -55,12 +46,12 @@ public class Contact {
         this.name = name;
     }
 
-    public Long getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
+    public void setAddressId(Address address) {
+        this.address = address;
     }
 
 }

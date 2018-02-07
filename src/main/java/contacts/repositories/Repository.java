@@ -24,18 +24,21 @@ public class Repository<T> {
         return em.find(entityClass, id);
     }
 
-    public void save(T entity) {
+    public T save(T entity) {
         em.getTransaction().begin();
-        em.merge(entity);
+        entity = em.merge(entity);
         em.getTransaction().commit();
-        
+        return entity;
     }
 
     public void delete(T entity) {
+        em.getTransaction().begin();
         em.remove(entity);
+        em.getTransaction().commit();
     }
 
     public Collection<T> findAll() {
+        em.clear();
         return em.createQuery("from " + entityClass.getSimpleName(), entityClass).getResultList();
     }
 }
